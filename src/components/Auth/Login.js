@@ -95,12 +95,11 @@ const Login = () => {
                   { params: { user_id: data.id } }
                 );
                 localStorage.setItem("employeeId", employeeResponse.data.data.employee_id);
-                navigate("/dashboard");
+                navigate("/employee/dashboard");
               } catch (employeeError) {
                 console.error("Error fetching employee ID:", employeeError);
                 alert("Error fetching employee ID");
               }
-            navigate("/dashboard");
             break;
           default:
             alert("Role not recognized");

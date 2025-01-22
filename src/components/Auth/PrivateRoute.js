@@ -7,7 +7,7 @@ const PrivateRoute = ({ children, allowedRoles }) => {
 
   if (!user) {
     console.log('No user found, redirecting to login');
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
   }
 
   const userRole = user.role_name;
@@ -18,7 +18,7 @@ const PrivateRoute = ({ children, allowedRoles }) => {
     return children;
   } else {
     console.log('User role not allowed, redirecting to login');
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
   }
 };
 

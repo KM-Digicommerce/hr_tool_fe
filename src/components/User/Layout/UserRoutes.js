@@ -12,7 +12,7 @@ function UserRoutes() {
   return (
     <Box>
         <Routes>
-          <Route path="/" element={<UserDashboard />} />
+          <Route path="/dashboard" element={<UserDashboard />} />
           <Route path="/attendance/request" element={<AttendanceRequest />} />
           <Route path="/attendance/history" element={<AttendanceHistory />} />
           <Route path="/leave/request" element={<LeaveRequest />} /> 

@@ -113,7 +113,7 @@ export default function MiniDrawer() {
         <List>
           {/* Dashboard */}
           <ListItem disablePadding sx={{ display: "block" }}>
-            <ListItemButton component={Link} to="/dashboard" sx={[{ minHeight: 48, px: 2 }, drawerOpen ? { justifyContent: "initial" } : { justifyContent: "center" }]}>
+            <ListItemButton component={Link} to="/employee/dashboard" sx={[{ minHeight: 48, px: 2 }, drawerOpen ? { justifyContent: "initial" } : { justifyContent: "center" }]}>
               <ListItemIcon sx={[{ minWidth: 0, justifyContent: "center" }, drawerOpen ? { mr: 2 } : { mr: "auto" }]}>
                 <Dashboard />
               </ListItemIcon>
@@ -132,7 +132,7 @@ export default function MiniDrawer() {
             {attendanceOpen && (
               <List sx={{ pl: 3 }}>
                 {/* Attendance Request Sub-item */}
-                <ListItemButton component={Link} to="/dashboard/attendance/request" sx={{ paddingLeft: 2 }}>
+                <ListItemButton component={Link} to="/employee/attendance/request" sx={{ paddingLeft: 2 }}>
                   <ListItemIcon sx={{ minWidth: 30 }}>
                     <RequestQuote />
                   </ListItemIcon>
@@ -140,7 +140,7 @@ export default function MiniDrawer() {
                 </ListItemButton>
 
                 {/* Attendance History Sub-item */}
-                <ListItemButton component={Link} to="/dashboard/attendance/history" sx={{ paddingLeft: 2 }}>
+                <ListItemButton component={Link} to="/employee/attendance/history" sx={{ paddingLeft: 2 }}>
                   <ListItemIcon sx={{ minWidth: 30 }}>
                     <History />
                   </ListItemIcon>
@@ -161,14 +161,14 @@ export default function MiniDrawer() {
             {leaveRequestsOpen && (
           <List sx={{ pl: 3 }}>
             {/* Leave History Sub-item */}
-            <ListItemButton component={Link} to="/dashboard/leave/request" sx={{ paddingLeft: 2 }}>
+            <ListItemButton component={Link} to="/employee/leave/request" sx={{ paddingLeft: 2 }}>
               <ListItemIcon sx={{ minWidth: 30 }}>
               <CalendarToday />
               </ListItemIcon>
               <ListItemText primary="Leave Request" sx={{ marginLeft: 1 }} />
             </ListItemButton>
             {/* Leave Request Sub-item */}
-            <ListItemButton component={Link} to="/dashboard/leave/history" sx={{ paddingLeft: 2 }}>
+            <ListItemButton component={Link} to="/employee/leave/history" sx={{ paddingLeft: 2 }}>
               <ListItemIcon sx={{ minWidth: 30 }}>
               <History />           
               </ListItemIcon>
@@ -188,21 +188,21 @@ export default function MiniDrawer() {
       {payrollOpen && (
         <List sx={{ pl: 3 }}>
           {/* Payslips Sub-item */}
-          <ListItemButton component={Link} to="/dashboard/payroll/payslips" sx={{ paddingLeft: 2 }}>
+          <ListItemButton component={Link} to="/employee/payroll/payslips" sx={{ paddingLeft: 2 }}>
             <ListItemIcon sx={{ minWidth: 30 }}>
               <Description /> {/* Icon for Payslips */}
             </ListItemIcon>
             <ListItemText primary="Payslips" sx={{ marginLeft: 1 }} />
           </ListItemButton>
           {/* Allowances Sub-item */}
-          <ListItemButton component={Link} to="/dashboard/payroll/allowances" sx={{ paddingLeft: 2 }}>
+          <ListItemButton component={Link} to="/employee/payroll/allowances" sx={{ paddingLeft: 2 }}>
             <ListItemIcon sx={{ minWidth: 30 }}>
               <AccountBalance /> {/* Icon for Allowances */}
             </ListItemIcon>
             <ListItemText primary="Allowances" sx={{ marginLeft: 1 }} />
           </ListItemButton>
           {/* Deductions Sub-item */}
-          <ListItemButton component={Link} to="/dashboard/payroll/deductions" sx={{ paddingLeft: 2 }}>
+          <ListItemButton component={Link} to="/employee/payroll/deductions" sx={{ paddingLeft: 2 }}>
             <ListItemIcon sx={{ minWidth: 30 }}>
               <RemoveCircle /> {/* Icon for Deductions */}
             </ListItemIcon>

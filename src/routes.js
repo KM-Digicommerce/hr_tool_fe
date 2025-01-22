@@ -9,7 +9,7 @@ const AppRoutes = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route
           path="/super_admin/*"
           element={
@@ -19,7 +19,7 @@ const AppRoutes = () => {
           }
         />
         <Route
-          path="/dashboard/*"
+          path="/employee/*"
           element={
             // <User />
             <PrivateRoute allowedRoles={['Employee']}>
