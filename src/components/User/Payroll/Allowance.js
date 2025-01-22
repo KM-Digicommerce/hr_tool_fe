@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Typography, Box, Grid, Paper, Button, Divider, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton } from '@mui/material';
+import { Container, Typography, Box, Paper, Button, Divider, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton } from '@mui/material';
 import { Add, Edit, Delete } from '@mui/icons-material';
 
 const Allowance = () => {
