@@ -14,7 +14,7 @@ import {
   FormControlLabel
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-// import loginGif from "../../assets/image.png";
+import loginGif from "../../assets/login.png";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -77,17 +77,30 @@ const Login = () => {
         { email, password }
       );
       const { data } = response.data;
-
+      console.log(data,'data');
+      
       if (data.valid) {
         localStorage.setItem("token", data._c1);
         localStorage.setItem("user", JSON.stringify(data));
-
+        localStorage.setItem("UserId", data.id);
+        
         switch (data.role_name) {
           case "super_admin":
             navigate("/super_admin");
             break;
-          case "client":
-            navigate("/client");
+          case "Employee":
+              try {
+                const employeeResponse = await axios.get(
+                  `${process.env.REACT_APP_IP}getEmployeeId/`,
+                  { params: { user_id: data.id } }
+                );
+                localStorage.setItem("employeeId", employeeResponse.data.data.employee_id);
+                navigate("/dashboard");
+              } catch (employeeError) {
+                console.error("Error fetching employee ID:", employeeError);
+                alert("Error fetching employee ID");
+              }
+            navigate("/dashboard");
             break;
           default:
             alert("Role not recognized");
@@ -110,10 +123,6 @@ const Login = () => {
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
-  };
-
-  const handleRegisterRedirect = () => {
-    navigate("/register");
   };
 
   return (
@@ -230,6 +239,7 @@ const Login = () => {
           color: "white",
           textAlign: "center",
           padding: 4,
+          height:"auto"
         }}
       >
         <Typography variant="h6" sx={{ fontWeight: 500 }}>
@@ -240,13 +250,13 @@ const Login = () => {
         </Typography>
 
         <img
-          // src={loginGif}
+          src={loginGif}
           alt="Login Animation"
           style={{
             maxWidth: "80%",
             height: "auto",
             borderRadius: "8px",
-            marginTop: "2rem",
+            marginTop: "0rem",
           }}
         />
       </Box>

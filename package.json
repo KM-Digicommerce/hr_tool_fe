@@ -1,0 +1,53 @@
+{
+  "name": "invoice-de",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@date-io/date-fns": "^3.2.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^6.3.0",
+    "@mui/lab": "^6.0.0-beta.23",
+    "@mui/material": "^6.4.0",
+    "@mui/x-data-grid": "^7.23.3",
+    "@mui/x-date-pickers": "^7.24.0",
+    "axios": "^1.7.9",
+    "cra-template": "1.2.0",
+    "date-fns": "^2.30.0",
+    "export-to-csv": "^1.4.0",
+    "file-saver": "^2.0.5",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-dropzone": "^14.3.5",
+    "react-modal": "^3.16.3",
+    "react-router-dom": "^7.1.1",
+    "react-scripts": "5.0.1",
+    "react-zoom-pan-pinch": "^3.6.1",
+    "web-vitals": "^4.2.4",
+    "xlsx": "^0.18.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

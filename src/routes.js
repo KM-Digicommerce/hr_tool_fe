@@ -2,7 +2,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/Auth/Login';
-import SuperAdmin from './components/Admin/Layout/MiniDrawer';
+// import SuperAdmin from './components/Admin/Layout/MiniDrawer';
 import User from './components/User/Layout/MiniDrawer';
 import PrivateRoute from './components/Auth/PrivateRoute';
 const AppRoutes = () => {
@@ -14,15 +14,15 @@ const AppRoutes = () => {
           path="/super_admin/*"
           element={
             <PrivateRoute allowedRoles={['super_admin']}>
-              <SuperAdmin />
+              {/* <SuperAdmin /> */}
             </PrivateRoute>
           }
         />
         <Route
-          path="/client/*"
+          path="/dashboard/*"
           element={
             // <User />
-            <PrivateRoute allowedRoles={['client']}>
+            <PrivateRoute allowedRoles={['Employee']}>
             <User />
             </PrivateRoute>
           }

@@ -9,7 +9,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Dashboard, Receipt, Settings } from "@mui/icons-material";
+import { Dashboard, Work, History, CalendarToday, Person, RequestQuote } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import Logout from "../../Auth/Logout";
 import UserRoutes from "./UserRoutes";
@@ -50,7 +50,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "drawerOpen", // Change 'open' to 'drawerOpen'
+  shouldForwardProp: (prop) => prop !== "drawerOpen",
 })(({ theme, drawerOpen }) => ({
   width: drawerWidth,
   flexShrink: 0,
@@ -68,7 +68,11 @@ const Drawer = styled(MuiDrawer, {
 
 export default function MiniDrawer() {
   const theme = useTheme();
-  const [drawerOpen, setDrawerOpen] = React.useState(false); // Rename 'open' to 'drawerOpen'
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
+
+  // States to manage the open/close of the sub-menu
+  const [attendanceOpen, setAttendanceOpen] = React.useState(false);
+  const [leaveRequestsOpen, setLeaveRequestsOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
     setDrawerOpen(true);
@@ -76,15 +80,27 @@ export default function MiniDrawer() {
 
   const handleDrawerClose = () => {
     setDrawerOpen(false);
+    setAttendanceOpen(false);
+    setLeaveRequestsOpen(false);
+  };
+
+  const toggleAttendance = () => {
+    setDrawerOpen(true);
+    setAttendanceOpen(!attendanceOpen);
+  };
+
+  const toggleLeaveRequests = () => {
+    setDrawerOpen(true);
+    setLeaveRequestsOpen(!leaveRequestsOpen);
   };
 
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
      
-      <CustomAppBar open={drawerOpen} onMenuClick={handleDrawerOpen} />  {/* Use CustomAppBar here */}
+      <CustomAppBar open={drawerOpen} onMenuClick={handleDrawerOpen} />
       
-      <Drawer variant="permanent" drawerOpen={drawerOpen}> {/* Change 'open' to 'drawerOpen' */}
+      <Drawer variant="permanent" drawerOpen={drawerOpen}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
@@ -96,8 +112,9 @@ export default function MiniDrawer() {
         </DrawerHeader>
         <Divider />
         <List>
+          {/* Dashboard */}
           <ListItem disablePadding sx={{ display: "block" }}>
-            <ListItemButton component={Link} to="/client" sx={[{ minHeight: 48, px: 2 }, drawerOpen ? { justifyContent: "initial" } : { justifyContent: "center" }]}>
+            <ListItemButton component={Link} to="/dashboard" sx={[{ minHeight: 48, px: 2 }, drawerOpen ? { justifyContent: "initial" } : { justifyContent: "center" }]}>
               <ListItemIcon sx={[{ minWidth: 0, justifyContent: "center" }, drawerOpen ? { mr: 2 } : { mr: "auto" }]}>
                 <Dashboard />
               </ListItemIcon>
@@ -105,7 +122,73 @@ export default function MiniDrawer() {
             </ListItemButton>
           </ListItem>
 
-       
+          {/* Attendance Section */}
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton onClick={toggleAttendance} sx={[{ minHeight: 48, px: 2 }, drawerOpen ? { justifyContent: "initial" } : { justifyContent: "center" }]}>
+              <ListItemIcon sx={[{ minWidth: 0, justifyContent: "center" }, drawerOpen ? { mr: 2 } : { mr: "auto" }]}>
+                <Work />
+              </ListItemIcon>
+              <ListItemText primary="Attendance" sx={[drawerOpen ? { opacity: 1 } : { opacity: 0 }]} />
+            </ListItemButton>
+            {attendanceOpen && (
+              <List sx={{ pl: 3 }}>
+                {/* Attendance Request Sub-item */}
+                <ListItemButton component={Link} to="/dashboard/attendance/request" sx={{ paddingLeft: 2 }}>
+                  <ListItemIcon sx={{ minWidth: 30 }}>
+                    <RequestQuote />
+                  </ListItemIcon>
+                  <ListItemText primary="Attendance Request" sx={{ marginLeft: 1 }} />
+                </ListItemButton>
+
+                {/* Attendance History Sub-item */}
+                <ListItemButton component={Link} to="/dashboard/attendance/history" sx={{ paddingLeft: 2 }}>
+                  <ListItemIcon sx={{ minWidth: 30 }}>
+                    <History />
+                  </ListItemIcon>
+                  <ListItemText primary="Attendance History" sx={{ marginLeft: 1 }} />
+                </ListItemButton>
+              </List>
+            )}
+          </ListItem>
+
+          {/* Leave Requests Section */}
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton onClick={toggleLeaveRequests} sx={[{ minHeight: 48, px: 2 }, drawerOpen ? { justifyContent: "initial" } : { justifyContent: "center" }]}>
+              <ListItemIcon sx={[{ minWidth: 0, justifyContent: "center" }, drawerOpen ? { mr: 2 } : { mr: "auto" }]}>
+                <CalendarToday />
+              </ListItemIcon>
+              <ListItemText primary="Leave Requests" sx={[drawerOpen ? { opacity: 1 } : { opacity: 0 }]} />
+            </ListItemButton>
+            {leaveRequestsOpen && (
+          <List sx={{ pl: 3 }}>
+            {/* Leave History Sub-item */}
+            <ListItemButton component={Link} to="/dashboard/leave/request" sx={{ paddingLeft: 2 }}>
+              <ListItemIcon sx={{ minWidth: 30 }}>
+              <CalendarToday />
+              </ListItemIcon>
+              <ListItemText primary="Leave Request" sx={{ marginLeft: 1 }} />
+            </ListItemButton>
+            {/* Leave Request Sub-item */}
+            <ListItemButton component={Link} to="/dashboard/leave/history" sx={{ paddingLeft: 2 }}>
+              <ListItemIcon sx={{ minWidth: 30 }}>
+              <History />           
+              </ListItemIcon>
+              <ListItemText primary="Leave History" sx={{ marginLeft: 1 }} />
+            </ListItemButton>
+          </List>
+        )}
+          </ListItem>
+
+          {/* My Profile Section */}
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton component={Link} to="/profile" sx={[{ minHeight: 48, px: 2 }, drawerOpen ? { justifyContent: "initial" } : { justifyContent: "center" }]}>
+              <ListItemIcon sx={[{ minWidth: 0, justifyContent: "center" }, drawerOpen ? { mr: 2 } : { mr: "auto" }]}>
+                <Person />
+              </ListItemIcon>
+              <ListItemText primary="My Profile" sx={[drawerOpen ? { opacity: 1 } : { opacity: 0 }]} />
+            </ListItemButton>
+          </ListItem>
+
         </List>
         <Divider />
         <Box sx={{ mt: "auto", mb: 2, px: 2 }}>
