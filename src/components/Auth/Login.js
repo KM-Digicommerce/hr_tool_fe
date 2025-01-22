@@ -76,14 +76,11 @@ const Login = () => {
         `${process.env.REACT_APP_IP}login_user/`,
         { email, password }
       );
-      const { data } = response.data;
-      console.log(data,'data');
-      
+      const { data } = response.data;      
       if (data.valid) {
         localStorage.setItem("token", data._c1);
         localStorage.setItem("user", JSON.stringify(data));
         localStorage.setItem("UserId", data.id);
-        
         switch (data.role_name) {
           case "super_admin":
             navigate("/super_admin");
@@ -154,7 +151,6 @@ const Login = () => {
           <Typography variant="h5" color="primary" gutterBottom>
             Sign In to Your Account
           </Typography>
-
           <TextField
             label="Email"
             type="email"
@@ -262,5 +258,4 @@ const Login = () => {
     </Box>
   );
 };
-
 export default Login;

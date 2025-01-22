@@ -80,6 +80,7 @@ export default function MiniDrawer() {
     setDrawerOpen(false);
     setAttendanceOpen(false);
     setLeaveRequestsOpen(false);
+    setPayrollOpen(false);
   };
   const toggleAttendance = () => {
     setDrawerOpen(true);
