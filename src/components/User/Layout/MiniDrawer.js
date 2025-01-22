@@ -133,7 +133,7 @@ export default function MiniDrawer() {
             {attendanceOpen && (
               <List sx={{ pl: 3 }}>
                 {/* Attendance Request Sub-item */}
-                <ListItemButton component={Link} to="/employee/attendance/request" sx={{ paddingLeft: 2,paddingTop: 0,paddingBottom: 0 ,"&:hover": {  backgroundColor: "#2066b0", color: "white", },  "&.Mui-selected": {  backgroundColor: "#0074d9",  color: "white", }}}>
+                <ListItemButton component={Link} to="/employee/attendance/request" sx={{ paddingLeft: 2,paddingTop: 0,paddingBottom: 0.5 ,"&:hover": {  backgroundColor: "#2066b0", color: "white", },  "&.Mui-selected": {  backgroundColor: "#0074d9",  color: "white", }}}>
                   <ListItemIcon sx={{ minWidth: 30 }}>
                     <RequestQuote />
                   </ListItemIcon>
@@ -141,7 +141,7 @@ export default function MiniDrawer() {
                 </ListItemButton>
 
                 {/* Attendance History Sub-item */}
-                <ListItemButton component={Link} to="/employee/attendance/history" sx={{ paddingLeft: 2,paddingTop: 0,paddingBottom: 0,"&:hover": {  backgroundColor: "#2066b0", color: "white", },  "&.Mui-selected": {  backgroundColor: "#0074d9",  color: "white", }}}>
+                <ListItemButton component={Link} to="/employee/attendance/history" sx={{ paddingLeft: 2,paddingTop: 0,paddingBottom: 0.5,"&:hover": {  backgroundColor: "#2066b0", color: "white", },  "&.Mui-selected": {  backgroundColor: "#0074d9",  color: "white", }}}>
                   <ListItemIcon sx={{ minWidth: 30 }}>
                     <History />
                   </ListItemIcon>
@@ -162,14 +162,14 @@ export default function MiniDrawer() {
             {leaveRequestsOpen && (
           <List sx={{ pl: 3 }}>
             {/* Leave History Sub-item */}
-            <ListItemButton component={Link} to="/employee/leave/request" sx={{ paddingLeft: 2,paddingTop: 0,paddingBottom: 0 ,"&:hover": {  backgroundColor: "#2066b0", color: "white", },  "&.Mui-selected": {  backgroundColor: "#0074d9",  color: "white", },}}>
-              <ListItemIcon sx={{ minWidth: 30 }}>
+            <ListItemButton component={Link} to="/employee/leave/request" sx={{ paddingLeft: 2,paddingTop: 0,paddingBottom: 0.5 ,"&:hover": {  backgroundColor: "#2066b0", color: "white", },  "&.Mui-selected": {  backgroundColor: "#0074d9",  color: "white", },}}>
+              <ListItemIcon sx={{ minWidth: 30,"&:hover": { backgroundColor: "#2066b0", color: "white", }, }}>
               <CalendarToday />
               </ListItemIcon>
               <ListItemText primary="Leave Request" sx={{ marginLeft: 1 }} />
             </ListItemButton>
             {/* Leave Request Sub-item */}
-            <ListItemButton component={Link} to="/employee/leave/history" sx={{ paddingLeft: 2,paddingTop: 0,paddingBottom: 0,"&:hover": {
+            <ListItemButton component={Link} to="/employee/leave/history" sx={{ paddingLeft: 2,paddingTop: 0,paddingBottom: 0.5,"&:hover": {
             backgroundColor: "#2066b0", color: "white", },
           "&.Mui-selected": {
             backgroundColor: "#0074d9",  color: "white", }}}>
@@ -192,21 +192,21 @@ export default function MiniDrawer() {
       {payrollOpen && (
         <List sx={{ pl: 3 }}>
           {/* Payslips Sub-item */}
-          <ListItemButton component={Link} to="/employee/payroll/payslips" sx={{ paddingLeft: 2,paddingTop: 0,paddingBottom: 0,"&:hover": { backgroundColor: "#2066b0", color: "white", },  "&.Mui-selected": {  backgroundColor: "#0074d9",  color: "white", }}}>
+          <ListItemButton component={Link} to="/employee/payroll/payslips" sx={{ paddingLeft: 2,paddingTop: 0,paddingBottom: 0.5,"&:hover": { backgroundColor: "#2066b0", color: "white", },  "&.Mui-selected": {  backgroundColor: "#0074d9",  color: "white", }}}>
             <ListItemIcon sx={{ minWidth: 30 }}>
               <Description /> {/* Icon for Payslips */}
             </ListItemIcon>
             <ListItemText primary="Payslips" sx={{ marginLeft: 1 }} />
           </ListItemButton>
           {/* Allowances Sub-item */}
-          <ListItemButton component={Link} to="/employee/payroll/view-allowances" sx={{ paddingLeft: 2,paddingTop: 0,paddingBottom: 0 ,"&:hover": { backgroundColor: "#2066b0", color: "white", },  "&.Mui-selected": { backgroundColor: "#0074d9",  color: "white", }}}>
+          <ListItemButton component={Link} to="/employee/payroll/view-allowances" sx={{ paddingLeft: 2,paddingTop: 0,paddingBottom: 0.5 ,"&:hover": { backgroundColor: "#2066b0", color: "white", },  "&.Mui-selected": { backgroundColor: "#0074d9",  color: "white", }}}>
             <ListItemIcon sx={{ minWidth: 30 }}>
               <AccountBalance /> {/* Icon for Allowances */}
             </ListItemIcon>
             <ListItemText primary="Allowances" sx={{ marginLeft: 1 }} />
           </ListItemButton>
           {/* Deductions Sub-item */}
-          <ListItemButton component={Link} to="/employee/payroll/view-deductions" sx={{ paddingLeft: 2,paddingTop: 0,paddingBottom: 0 ,"&:hover": { backgroundColor: "#2066b0", color: "white", },  "&.Mui-selected": { backgroundColor: "#0074d9",  color: "white", }}}>
+          <ListItemButton component={Link} to="/employee/payroll/view-deductions" sx={{ paddingLeft: 2,paddingTop: 0,paddingBottom: 0.5 ,"&:hover": { backgroundColor: "#2066b0", color: "white", },  "&.Mui-selected": { backgroundColor: "#0074d9",  color: "white", }}}>
             <ListItemIcon sx={{ minWidth: 30 }}>
               <RemoveCircle /> {/* Icon for Deductions */}
             </ListItemIcon>
