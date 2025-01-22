@@ -9,7 +9,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Dashboard, Work, History, CalendarToday, Person, RequestQuote, AttachMoney, Description, AccountBalance, RemoveCircle } from "@mui/icons-material";
+import { Dashboard, Work, History, CalendarToday, Person, RequestQuote, AttachMoney, Description, AccountBalance, RemoveCircle, AccountCircle, FileCopy } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import Logout from "../../Auth/Logout";
 import UserRoutes from "./UserRoutes";
@@ -73,6 +73,7 @@ export default function MiniDrawer() {
   const [attendanceOpen, setAttendanceOpen] = React.useState(false);
   const [leaveRequestsOpen, setLeaveRequestsOpen] = React.useState(false);
   const [payrollOpen, setPayrollOpen] = React.useState(false); // New state for Payroll
+  const [employeeOpen, setEmployeeOpen] = React.useState(false); // New state for Payroll
   const handleDrawerOpen = () => {
     setDrawerOpen(true);
   };
@@ -81,6 +82,7 @@ export default function MiniDrawer() {
     setAttendanceOpen(false);
     setLeaveRequestsOpen(false);
     setPayrollOpen(false);
+    setEmployeeOpen(false);
   };
   const toggleAttendance = () => {
     setDrawerOpen(true);
@@ -93,6 +95,10 @@ export default function MiniDrawer() {
   const togglePayroll = () => { // New toggle function for Payroll
     setDrawerOpen(true);
     setPayrollOpen(!payrollOpen);
+  };
+  const toggleEmployee = () => { // New toggle function for Payroll
+    setDrawerOpen(true);
+    setEmployeeOpen(!payrollOpen);
   };
   return (
     <Box sx={{ display: "flex" }}>
@@ -215,17 +221,39 @@ export default function MiniDrawer() {
         </List>
       )}
     </ListItem>
-
-          {/* My Profile Section */}
-          <ListItem disablePadding sx={{ display: "block" }}>
-            <ListItemButton component={Link} to="/profile" sx={[{ minHeight: 48, px: 2 }, drawerOpen ? { justifyContent: "initial" } : { justifyContent: "center" }]}>
-              <ListItemIcon sx={[{ minWidth: 0, justifyContent: "center" }, drawerOpen ? { mr: 2 } : { mr: "auto" }]}>
-                <Person />
-              </ListItemIcon>
-              <ListItemText primary="My Profile" sx={[drawerOpen ? { opacity: 1 } : { opacity: 0 }]} />
-            </ListItemButton>
-          </ListItem>
-
+    <ListItem disablePadding sx={{ display: "block" }}>
+  <ListItemButton onClick={toggleEmployee} sx={[{ minHeight: 48, px: 2 }, drawerOpen ? { justifyContent: "initial" } : { justifyContent: "center" }]}>
+    <ListItemIcon sx={[{ minWidth: 0, justifyContent: "center" }, drawerOpen ? { mr: 2 } : { mr: "auto" }]}>
+      <Person /> {/* Icon for Employee */}
+    </ListItemIcon>
+    <ListItemText primary="Employee" sx={[drawerOpen ? { opacity: 1 } : { opacity: 0 }]} />
+  </ListItemButton>
+  {employeeOpen && (
+    <List sx={{ pl: 3, paddingTop: 0, paddingBottom: 0 }}>
+      {/* Profile Sub-item */}
+      <ListItemButton component={Link} to="/employee/profile" sx={{ paddingLeft: 2, paddingTop: 0.5, paddingBottom: 0.5, "&:hover": { backgroundColor: "#2066b0", color: "white" }, "&.Mui-selected": { backgroundColor: "#0074d9", color: "white" } }}>
+        <ListItemIcon sx={{ minWidth: 30 }}>
+          <AccountCircle /> {/* Icon for Profile */}
+        </ListItemIcon>
+        <ListItemText primary="Profile" sx={{ marginLeft: 1 }} />
+      </ListItemButton>
+      {/* Document Request Sub-item */}
+      <ListItemButton component={Link} to="/employee/document-request" sx={{ paddingLeft: 2, paddingTop: 0.5, paddingBottom: 0.5, "&:hover": { backgroundColor: "#2066b0", color: "white" }, "&.Mui-selected": { backgroundColor: "#0074d9", color: "white" } }}>
+        <ListItemIcon sx={{ minWidth: 30 }}>
+          <FileCopy /> {/* Icon for Document Request */}
+        </ListItemIcon>
+        <ListItemText primary="Document Request" sx={{ marginLeft: 1 }} />
+      </ListItemButton>
+      {/* Work Type Request Sub-item */}
+      <ListItemButton component={Link} to="/employee/work-type-request" sx={{ paddingLeft: 2, paddingTop: 0.5, paddingBottom: 0.5, "&:hover": { backgroundColor: "#2066b0", color: "white" }, "&.Mui-selected": { backgroundColor: "#0074d9", color: "white" } }}>
+        <ListItemIcon sx={{ minWidth: 30 }}>
+          <Work /> {/* Icon for Work Type Request */}
+        </ListItemIcon>
+        <ListItemText primary="Work Type Request" sx={{ marginLeft: 1 }} />
+      </ListItemButton>
+    </List>
+  )}
+</ListItem>
         </List>
         <Divider />
         <Box sx={{ mt: "auto", mb: 2, px: 2 }}>

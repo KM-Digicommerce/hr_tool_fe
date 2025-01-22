@@ -1,19 +1,5 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Typography,
-  Button,
-  IconButton,
-  Grid,
-  Card,
-  CardContent,
-  Avatar,
-  TextField,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
+import { Box, Typography, Button, IconButton, Grid, Card, CardContent, Avatar, TextField, Table, TableBody, TableCell, TableHead, TableRow,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -73,22 +59,38 @@ const Dashboard = () => {
   };
   const handleCheckInOut = async () => {
     if (navigator.geolocation) {
+      // Setting options for high accuracy
+      const options = {
+        enableHighAccuracy: true, // Request high accuracy
+        timeout: 10000, // Set timeout to 10 seconds
+        maximumAge: 0, // Don't use cached location
+      };
+  
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
-
+  
+          // Check if latitude and longitude are valid numbers
+          if (isNaN(latitude) || isNaN(longitude)) {
+            alert("Unable to retrieve accurate location. Please try again.");
+            return;
+          }
+  
           if (!isCheckedIn) {
             // Check In API call
             try {
               const response = await axios.post(`${process.env.REACT_APP_IP}checkin/`, {
                 longitude,
                 latitude,
-                employee_id:employeeId,
+                employee_id: employeeId,
               });
-              if (response.status === 200) {
+              console.log(response.data.data.success, 'sdasd');
+              if (response.data.data.success === true) {
                 setIsCheckedIn(true);
                 setRunningTime(0); // Reset the timer
                 startTimer(); // Start the timer
+              } else if (response.data.data.message) {
+                alert(response.data.data.message);
               }
             } catch (error) {
               console.error("Error during Check In:", error);
@@ -111,12 +113,16 @@ const Dashboard = () => {
         },
         (error) => {
           console.error("Geolocation error:", error);
-        }
+          alert("Unable to retrieve location. Please check your location settings.");
+        },
+        options // Pass options for high accuracy
       );
     } else {
       console.error("Geolocation is not supported by this browser.");
+      alert("Geolocation is not supported by this browser.");
     }
   };
+  
   const startTimer = () => {
     const interval = setInterval(() => {
       setRunningTime((prevTime) => prevTime + 1);
@@ -214,14 +220,14 @@ const Dashboard = () => {
               </Typography>
               <Box mt={2}>
                 <Box display="flex" justifyContent="space-between" mb={1}>
-                  <Typography variant="body2">Kamal Hassan's Birthday</Typography>
+                  <Typography variant="body2">Sivanandham's Birthday</Typography>
                   <Button size="small" variant="outlined">
                     Wish
                   </Button>
                 </Box>
                 <Box display="flex" justifyContent="space-between">
                   <Typography variant="body2">
-                    Nishant's Work Anniversary
+                    Selva's Work Anniversary
                   </Typography>
                   <Button size="small" variant="outlined">
                     Wish
