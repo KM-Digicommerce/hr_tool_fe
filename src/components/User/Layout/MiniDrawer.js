@@ -9,7 +9,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Dashboard, Work, History, CalendarToday, Person, RequestQuote } from "@mui/icons-material";
+import { Dashboard, Work, History, CalendarToday, Person, RequestQuote, AttachMoney, Description, AccountBalance, RemoveCircle } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import Logout from "../../Auth/Logout";
 import UserRoutes from "./UserRoutes";
@@ -69,31 +69,30 @@ const Drawer = styled(MuiDrawer, {
 export default function MiniDrawer() {
   const theme = useTheme();
   const [drawerOpen, setDrawerOpen] = React.useState(false);
-
   // States to manage the open/close of the sub-menu
   const [attendanceOpen, setAttendanceOpen] = React.useState(false);
   const [leaveRequestsOpen, setLeaveRequestsOpen] = React.useState(false);
-
+  const [payrollOpen, setPayrollOpen] = React.useState(false); // New state for Payroll
   const handleDrawerOpen = () => {
     setDrawerOpen(true);
   };
-
   const handleDrawerClose = () => {
     setDrawerOpen(false);
     setAttendanceOpen(false);
     setLeaveRequestsOpen(false);
   };
-
   const toggleAttendance = () => {
     setDrawerOpen(true);
     setAttendanceOpen(!attendanceOpen);
   };
-
   const toggleLeaveRequests = () => {
     setDrawerOpen(true);
     setLeaveRequestsOpen(!leaveRequestsOpen);
   };
-
+  const togglePayroll = () => { // New toggle function for Payroll
+    setDrawerOpen(true);
+    setPayrollOpen(!payrollOpen);
+  };
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -178,6 +177,40 @@ export default function MiniDrawer() {
           </List>
         )}
           </ListItem>
+ {/* Payroll Main Item */}
+ <ListItem disablePadding sx={{ display: "block" }}>
+      <ListItemButton onClick={togglePayroll} sx={[{ minHeight: 48, px: 2 }, drawerOpen ? { justifyContent: "initial" } : { justifyContent: "center" }]}>
+        <ListItemIcon sx={[{ minWidth: 0, justifyContent: "center" }, drawerOpen ? { mr: 2 } : { mr: "auto" }]}>
+          <AttachMoney /> {/* Icon for Payroll */}
+        </ListItemIcon>
+        <ListItemText primary="Payroll" sx={[drawerOpen ? { opacity: 1 } : { opacity: 0 }]} />
+      </ListItemButton>
+      {payrollOpen && (
+        <List sx={{ pl: 3 }}>
+          {/* Payslips Sub-item */}
+          <ListItemButton component={Link} to="/dashboard/payroll/payslips" sx={{ paddingLeft: 2 }}>
+            <ListItemIcon sx={{ minWidth: 30 }}>
+              <Description /> {/* Icon for Payslips */}
+            </ListItemIcon>
+            <ListItemText primary="Payslips" sx={{ marginLeft: 1 }} />
+          </ListItemButton>
+          {/* Allowances Sub-item */}
+          <ListItemButton component={Link} to="/dashboard/payroll/allowances" sx={{ paddingLeft: 2 }}>
+            <ListItemIcon sx={{ minWidth: 30 }}>
+              <AccountBalance /> {/* Icon for Allowances */}
+            </ListItemIcon>
+            <ListItemText primary="Allowances" sx={{ marginLeft: 1 }} />
+          </ListItemButton>
+          {/* Deductions Sub-item */}
+          <ListItemButton component={Link} to="/dashboard/payroll/deductions" sx={{ paddingLeft: 2 }}>
+            <ListItemIcon sx={{ minWidth: 30 }}>
+              <RemoveCircle /> {/* Icon for Deductions */}
+            </ListItemIcon>
+            <ListItemText primary="Deductions" sx={{ marginLeft: 1 }} />
+          </ListItemButton>
+        </List>
+      )}
+    </ListItem>
 
           {/* My Profile Section */}
           <ListItem disablePadding sx={{ display: "block" }}>
