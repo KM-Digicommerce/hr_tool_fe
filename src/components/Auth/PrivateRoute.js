@@ -9,10 +9,7 @@ const PrivateRoute = ({ children, allowedRoles }) => {
     console.log('No user found, redirecting to login');
     return <Navigate to="/" />;
   }
-
   const userRole = user.role_name;
-  console.log('User Role:', userRole); // Debugging line
-
   if (allowedRoles.includes(userRole)) {
     // If user role matches allowed roles, render the children
     return children;

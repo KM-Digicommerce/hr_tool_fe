@@ -65,17 +65,16 @@ const Dashboard = () => {
         timeout: 10000, // Set timeout to 10 seconds
         maximumAge: 0, // Don't use cached location
       };
-  
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
-  
+          // Log coordinates to the console to ensure they are being retrieved correctly
+          console.log("Latitude: ", latitude, "Longitude: ", longitude);
           // Check if latitude and longitude are valid numbers
           if (isNaN(latitude) || isNaN(longitude)) {
             alert("Unable to retrieve accurate location. Please try again.");
             return;
           }
-  
           if (!isCheckedIn) {
             // Check In API call
             try {
