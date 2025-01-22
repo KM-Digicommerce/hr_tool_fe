@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "date-fns": "^3.6.0", // Keep the latest version
-    "@date-io/date-fns": "^3.2.0", // Compatible with date-fns@3.x
+    "date-fns": "^3.6.0",
+    "@date-io/date-fns": "^3.2.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.3.0",
@@ -15,7 +15,7 @@
     "axios": "^1.7.9",
     "export-to-csv": "^1.4.0",
     "file-saver": "^2.0.5",
-    "react": "^18.2.0", // Use the latest stable React version
+    "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.3.5",
     "react-modal": "^3.16.3",
