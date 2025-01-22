@@ -1,14 +1,13 @@
 {
-  "name": "invoice-de",
+  "name": "hr-portal",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "date-fns": "^3.6.0",
+    "date-fns": "^2.25.0",  
     "@date-io/date-fns": "^3.2.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.3.0",
-    "@mui/lab": "^6.0.0-beta.23",
     "@mui/material": "^6.4.0",
     "@mui/x-data-grid": "^7.23.3",
     "@mui/x-date-pickers": "^7.24.0",

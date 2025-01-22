@@ -243,7 +243,6 @@ const Login = () => {
         <Typography variant="body2" sx={{ marginBottom: 3 }}>
           Manage employee information and HR tasks effortlessly. Log in to access your portal.
         </Typography>
-
         <img
           src={loginGif}
           alt="Login Animation"
