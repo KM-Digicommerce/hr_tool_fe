@@ -13,26 +13,29 @@ const AdminDashboard = () => {
   });
 
   // Here you can replace with API calls to get live data
-  useEffect(async() => {
-    // Sample API call simulation (can be replaced with your API)
-    // Assuming you fetch data and set it in state
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_IP}hr/obtainDashboardForHR/`, );
-      if (response) {
-        setDashboardData({
-          newJoiningsToday: response.data.newJoiningsToday,
-          newJoiningsThisWeek: response.data.newJoiningsThisWeek,
-          totalStrength: response.data.totalStrength,
-        });
+  useEffect(() => {
+    // Define the async function inside useEffect
+    const fetchDashboardData = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_IP}hr/obtainDashboardForHR/`
+        );
+        if (response) {
+          setDashboardData({
+            newJoiningsToday: response.data.newJoiningsToday,
+            newJoiningsThisWeek: response.data.newJoiningsThisWeek,
+            totalStrength: response.data.totalStrength,
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+        alert("Error fetching dashboard data");
       }
-    } catch (employeeError) {
-      console.error("Error fetching employee ID:", employeeError);
-      alert("Error fetching employee ID");
-    }
-    
-   
-  }, []);
+    };
+
+    // Call the async function
+    fetchDashboardData();
+  }, []); // 
 
   return (
     <Container maxWidth="lg" sx={{ marginTop: 4 }}>
