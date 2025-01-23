@@ -1,48 +1,47 @@
-
 import React, { useState, useEffect } from "react";
-import { Container, Grid, Card, CardContent, Typography, Box } from "@mui/material";
+import { Container, Grid, Card, CardContent, Typography, Box, CircularProgress } from "@mui/material";
 import { Group, AccessTime, DateRange } from "@mui/icons-material";
 import axios from "axios";
 
 const AdminDashboard = () => {
-  // Sample data for the dashboard cards
-  const [dashboardData, setDashboardData] = useState({
-    newJoiningsToday: 5,
-    newJoiningsThisWeek: 20,
-    totalStrength: 150,
-  });
-
-  // Here you can replace with API calls to get live data
+  const [dashboardData, setDashboardData] = useState({});
+  const [loading, setLoading] = useState(true); // New state to track loading status
   useEffect(() => {
     // Define the async function inside useEffect
     const fetchDashboardData = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_IP}hr/obtainDashboardForHR/`
-        );
+        const response = await axios.get(`${process.env.REACT_APP_IP}hr/obtainDashboardForHR/`);
         if (response) {
           setDashboardData({
-            newJoiningsToday: response.data.newJoiningsToday,
-            newJoiningsThisWeek: response.data.newJoiningsThisWeek,
-            totalStrength: response.data.totalStrength,
+            newJoiningsToday: response.data.data.today_users_count,
+            newJoiningsThisWeek: response.data.data.last_one_week_users_count,
+            totalStrength: response.data.data.total_users_users_count,
           });
         }
       } catch (error) {
         console.error("Error fetching dashboard data:", error);
         alert("Error fetching dashboard data");
+      } finally {
+        setLoading(false); // Set loading to false when API call completes
       }
     };
-
     // Call the async function
     fetchDashboardData();
-  }, []); // 
+  }, []); // Empty dependency array ensures this runs only once on mount
+
+  if (loading) {
+    return (
+      <Box  sx={{  display: "flex",  justifyContent: "center",  alignItems: "center",  height: "100vh",  }}  >
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <Container maxWidth="lg" sx={{ marginTop: 4 }}>
       <Typography variant="h4" sx={{ fontWeight: "bold", marginBottom: 4 }}>
         Dashboard
       </Typography>
-      
       <Grid container spacing={3}>
         {/* New Joinings Today Card */}
         <Grid item xs={12} md={4}>
