@@ -126,14 +126,14 @@ export default function MiniDrawer() {
         <ListItemText primary="Employees" sx={{ marginLeft: 1 }} />
       </ListItemButton>
       {/* Document Request Sub-item */}
-      <ListItemButton component={Link} to="/employee/document-request" sx={{ paddingLeft: 2, paddingTop: 0.5, paddingBottom: 0.5, "&:hover": { backgroundColor: "#2066b0", color: "white" }, "&.Mui-selected": { backgroundColor: "#0074d9", color: "white" } }}>
+      <ListItemButton component={Link} to="/hr/document-request" sx={{ paddingLeft: 2, paddingTop: 0.5, paddingBottom: 0.5, "&:hover": { backgroundColor: "#2066b0", color: "white" }, "&.Mui-selected": { backgroundColor: "#0074d9", color: "white" } }}>
         <ListItemIcon sx={{ minWidth: 30 }}>
           <FileCopy /> {/* Icon for Document Request */}
         </ListItemIcon>
         <ListItemText primary="Document Request" sx={{ marginLeft: 1 }} />
       </ListItemButton>
       {/* Work Type Request Sub-item */}
-      <ListItemButton component={Link} to="/employee/work-type-request" sx={{ paddingLeft: 2, paddingTop: 0.5, paddingBottom: 0.5, "&:hover": { backgroundColor: "#2066b0", color: "white" }, "&.Mui-selected": { backgroundColor: "#0074d9", color: "white" } }}>
+      <ListItemButton component={Link} to="/hr/work-type-request" sx={{ paddingLeft: 2, paddingTop: 0.5, paddingBottom: 0.5, "&:hover": { backgroundColor: "#2066b0", color: "white" }, "&.Mui-selected": { backgroundColor: "#0074d9", color: "white" } }}>
         <ListItemIcon sx={{ minWidth: 30 }}>
           <Work /> {/* Icon for Work Type Request */}
         </ListItemIcon>

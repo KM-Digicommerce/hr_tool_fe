@@ -16,9 +16,7 @@ const Logout = () => {
   return (
 
     <Tooltip title="Logout" arrow>
-   
       <ExitToAppIcon sx={{fontSize:'2rem'}} onClick={handleLogout}/>
-    
   </Tooltip>
   
   );
