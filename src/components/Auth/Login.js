@@ -88,9 +88,7 @@ const Login = () => {
             break;
           case "Employee":
               try {
-                const employeeResponse = await axios.get(
-                  `${process.env.REACT_APP_IP}app/getEmployeeId/`,
-                  { params: { user_id: data.id } }
+                const employeeResponse = await axios.get( `${process.env.REACT_APP_IP}employee/getEmployeeId/`,  { params: { user_id: data.id } }
                 );
                 localStorage.setItem("employeeId", employeeResponse.data.data.employee_id);
                 navigate("/employee/dashboard");

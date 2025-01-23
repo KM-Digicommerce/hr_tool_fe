@@ -1,52 +1,56 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Container, Box, Typography, Avatar, Divider } from '@mui/material';
-
-// Static employee data
-const employees = [
-  {
-    id: 1,
-    name: "John Doe",
-    position: "Software Engineer",
-    department: "IT Department",
-    email: "john.doe@example.com",
-    phone: "+1 234 567 890",
-    avatar: "https://img.freepik.com/free-photo/business-man-by-skyscraper_1303-13655.jpg?uid=R178818371&ga=GA1.1.965077700.1728471595&semt=ais_hybrid",
-    joinDate: "2020-01-15",
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    position: "HR Manager",
-    department: "HR Department",
-    email: "jane.smith@example.com",
-    phone: "+1 234 567 891",
-    avatar: "https://img.freepik.com/free-photo/studio-portrait-beautiful-young-woman-posing_1301-3611.jpg?uid=R178818371&ga=GA1.1.965077700.1728471595&semt=ais_hybrid",
-    joinDate: "2018-03-25",
-  },
-  {
-    id: 3,
-    name: "Michael Johnson",
-    position: "Backend Developer",
-    department: "IT Department",
-    email: "michael@example.com",
-    phone: "+1 234 567 891",
-    avatar: "https://img.freepik.com/free-photo/portrait-man-with-glasses_23-2148514897.jpg?uid=R178818371&ga=GA1.1.965077700.1728471595&semt=ais_hybrid",
-    joinDate: "2018-03-25",
-  },
-  // Add more employees as needed
-];
+import { Container, Box, Typography, Avatar, Divider, CircularProgress } from '@mui/material';
+import axios from 'axios'; // Import axios for making API calls
 
 const EmployeeView = () => {
   const { employeeId } = useParams(); // Get the employeeId from the URL
-  const [employee, setEmployee] = useState(null);
+  const [employee, setEmployee] = useState(null); // State to hold employee data
+  const [loading, setLoading] = useState(true); // State to handle loading status
+  const [error, setError] = useState(null); // State to handle errors
 
   useEffect(() => {
-    // Find the employee based on the employeeId from the URL params
-    const employeeData = employees.find(emp => emp.id === parseInt(employeeId));
-    setEmployee(employeeData);
-  }, [employeeId]);
+    const fetchEmployeeDetails = async () => {
+      try {
+        setLoading(true); // Start loading
+        setError(null); // Reset error state
+        const response = await axios.get(`${process.env.REACT_APP_IP}hr/obtainEmployeeDetails/?employee_id=${employeeId}`);
+        if (response && response.data) {
+          setEmployee(response.data.data.users); // Set employee data from the API response
+        }
+      } catch (err) {
+        setError("Error fetching employee details"); // Handle errors
+        console.error("Error fetching employee details:", err);
+      } finally {
+        setLoading(false); // Stop loading after the API call
+      }
+    };
 
+    fetchEmployeeDetails(); // Fetch employee details when component mounts
+  }, [employeeId]); // Dependency array ensures it runs when employeeId changes
+
+  // Show loading indicator while fetching data
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  // Show error message if there was an error during the fetch
+  if (error) {
+    return <Typography>{error}</Typography>;
+  }
+
+  // If employee data is not found
   if (!employee) {
     return <Typography>Employee not found</Typography>;
   }
@@ -61,7 +65,7 @@ const EmployeeView = () => {
           <Typography variant="body1" color="textSecondary">{employee.department}</Typography>
         </Box>
       </Box>
-
+      <Typography variant="body1"><strong>User Name:</strong> {employee.username}</Typography>
       <Typography variant="body1"><strong>Email:</strong> {employee.email}</Typography>
       <Typography variant="body1"><strong>Phone:</strong> {employee.phone}</Typography>
       <Typography variant="body1"><strong>Join Date:</strong> {employee.joinDate}</Typography>

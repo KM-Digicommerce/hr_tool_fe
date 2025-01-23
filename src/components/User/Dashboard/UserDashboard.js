@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Typography, Button, IconButton, Grid, Card, CardContent, Avatar, TextField, Table, TableBody, TableCell, TableHead, TableRow,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
@@ -22,11 +22,54 @@ const Dashboard = () => {
   ).getDate();
   const user = JSON.parse(localStorage.getItem("user"));
   const employeeId =localStorage.getItem("employeeId");
+  const UserId = localStorage.getItem("UserId");
+  useEffect(() => {
+    const fetchTotalSeconds = async () => {
+      try {
+        // Call the API to fetch the total_seconds for the user
+        const response = await axios.get(
+          `${process.env.REACT_APP_IP}employee/getEmployeeId/`,
+          { params: { user_id: UserId } }
+        );
+
+        if (response.status === 200) {
+          const totalSeconds = response.data.data.total_seconds;
+          if (totalSeconds > 0) {
+            setRunningTime(totalSeconds); // Set the running time from the API response
+            setIsCheckedIn(true); // Set checked-in status to true
+          }
+        } else {
+          console.error("Failed to fetch total seconds:", response);
+        }
+      } catch (error) {
+        console.error("Error fetching total seconds:", error);
+      }
+    };
+
+    fetchTotalSeconds();
+  }, [UserId]);
+
+  useEffect(() => {
+    // Start timer if user is checked in
+    if (isCheckedIn) {
+      const interval = setInterval(() => {
+        setRunningTime((prevTime) => prevTime + 1);
+      }, 1000);
+      setTimerInterval(interval);
+
+      // Clear interval when component is unmounted or when checked-out
+      return () => clearInterval(interval);
+    } else {
+      // Stop timer if user is checked out
+      clearInterval(timerInterval);
+    }
+  }, [isCheckedIn]);
+
   const handleBreakInOut = async () => {
     console.log(isBreakIn);
             try {
               const response = await axios.get(
-                `${process.env.REACT_APP_IP}breakRecord/`,
+                `${process.env.REACT_APP_IP}employee/breakRecord/`,
                 { params: {break_type:isBreakIn ? 'break_in' : 'break_out', employee_id:employeeId,} } );
               if (response.status === 200) {
                console.log(response.data.data.message);   
@@ -56,26 +99,24 @@ const Dashboard = () => {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
-          // Log coordinates to the console to ensure they are being retrieved correctly
-          console.log("Latitude: ", latitude, "Longitude: ", longitude);
-          // Check if latitude and longitude are valid numbers
+  
           if (isNaN(latitude) || isNaN(longitude)) {
             alert("Unable to retrieve accurate location. Please try again.");
             return;
           }
+  
           if (!isCheckedIn) {
-            // Check In API call
+            // Check-In API call
             try {
-              const response = await axios.post(`${process.env.REACT_APP_IP}checkin/`, {
-                longitude,
-                latitude,
-                employee_id: employeeId,
-              });
-              console.log(response.data.data.success, 'sdasd');
+              const response = await axios.post(`${process.env.REACT_APP_IP}employee/checkin/`,  {  longitude,  latitude,  employee_id: employeeId, } );
+              console.log(response.data.data.success);
               if (response.data.data.success === true) {
                 setIsCheckedIn(true);
                 setRunningTime(0); // Reset the timer
                 startTimer(); // Start the timer
+                // Get the total_seconds from the response
+                const totalSeconds = response.data.data.total_seconds;
+                setRunningTime(totalSeconds); // Set initial running time from API
               } else if (response.data.data.message) {
                 alert(response.data.data.message);
               }
@@ -83,12 +124,12 @@ const Dashboard = () => {
               console.error("Error during Check In:", error);
             }
           } else {
-            // Check Out API call
+            // Check-Out API call
             try {
-              const response = await axios.post(`${process.env.REACT_APP_IP}checkout/`, {
-                longitude,
-                latitude,
-              });
+              const response = await axios.get(
+                `${process.env.REACT_APP_IP}employee/checkout_user/`,
+                { params: { employee_id: employeeId } }
+              );
               if (response.status === 200) {
                 setIsCheckedIn(false);
                 stopTimer(); // Stop the timer
@@ -110,29 +151,29 @@ const Dashboard = () => {
     }
   };
   
+  // Start Timer
   const startTimer = () => {
     const interval = setInterval(() => {
       setRunningTime((prevTime) => prevTime + 1);
     }, 1000); // Update every second
     setTimerInterval(interval);
   };
-
+  
   // Stop Timer
   const stopTimer = () => {
     clearInterval(timerInterval);
     setTimerInterval(null);
   };
-
+  
   // Format time in HH:MM:SS
-  const formatTime = (seconds) => {
-    const hrs = Math.floor(seconds / 3600);
-    const mins = Math.floor((seconds % 3600) / 60);
-    const secs = seconds % 60;
-    return `${hrs.toString().padStart(2, "0")}:${mins
+  const formatTime = (totalSeconds) => {
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = Math.floor(totalSeconds % 60);
+    return `${hours.toString().padStart(2, "0")}:${minutes
       .toString()
-      .padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
-  };
-
+      .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+  };  
   return (
     <Box sx={{ backgroundColor: "#f9f9f9", minHeight: "100vh", p: 3 }}>
       {/* Header Section */}
