@@ -12,19 +12,7 @@ const Dashboard = () => {
   const [runningTime, setRunningTime] = useState(0); // Timer state in seconds
   const [timerInterval, setTimerInterval] = useState(null); 
   const today = new Date();
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+  const monthNames = [  "January",  "February",  "March",  "April",  "May",  "June",  "July",  "August",  "September",  "October",  "November",  "December",
   ];
 
   const daysInMonth = new Date(

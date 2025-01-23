@@ -11,7 +11,7 @@ const Profile = () => {
     email: "john.doe@example.com",
     phone: "+1 234 567 8901",
     address: "123 Street, City, Country",
-    profilePicture: "https://via.placeholder.com/150"
+    profilePicture: ""
   });
 
   // For edit mode
@@ -57,7 +57,6 @@ const Profile = () => {
           <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2 }}>
             Personal Information
           </Typography>
-
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
               <TextField

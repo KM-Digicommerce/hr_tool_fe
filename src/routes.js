@@ -4,16 +4,17 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/Auth/Login';
 import User from './components/User/Layout/MiniDrawer';
 import PrivateRoute from './components/Auth/PrivateRoute';
+import SuperAdmin from './components/Admin/Layout/MiniDrawer';
 const AppRoutes = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route
-          path="/super_admin/*"
+          path="/hr/*"
           element={
-            <PrivateRoute allowedRoles={['super_admin']}>
-              {/* <SuperAdmin /> */}
+            <PrivateRoute allowedRoles={['HR']}>
+              <SuperAdmin />
             </PrivateRoute>
           }
         />

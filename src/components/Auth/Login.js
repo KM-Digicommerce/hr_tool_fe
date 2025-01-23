@@ -73,7 +73,7 @@ const Login = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_IP}login_user/`,
+        `${process.env.REACT_APP_IP}app/login_user/`,
         { email, password }
       );
       const { data } = response.data;      
@@ -82,13 +82,14 @@ const Login = () => {
         localStorage.setItem("user", JSON.stringify(data));
         localStorage.setItem("UserId", data.id);
         switch (data.role_name) {
-          case "super_admin":
-            navigate("/super_admin");
+          case "HR":
+            console.log("HR");
+            navigate("/hr/dashboard");
             break;
           case "Employee":
               try {
                 const employeeResponse = await axios.get(
-                  `${process.env.REACT_APP_IP}getEmployeeId/`,
+                  `${process.env.REACT_APP_IP}app/getEmployeeId/`,
                   { params: { user_id: data.id } }
                 );
                 localStorage.setItem("employeeId", employeeResponse.data.data.employee_id);

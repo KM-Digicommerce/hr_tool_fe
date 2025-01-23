@@ -98,7 +98,7 @@ export default function MiniDrawer() {
   };
   const toggleEmployee = () => { // New toggle function for Payroll
     setDrawerOpen(true);
-    setEmployeeOpen(!payrollOpen);
+    setEmployeeOpen(!employeeOpen);
   };
   return (
     <Box sx={{ display: "flex" }}>
