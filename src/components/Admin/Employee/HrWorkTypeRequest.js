@@ -1,22 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { Container, Box, Card, CardContent, Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
+import { Container, Box, Card, CardContent, Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress } from "@mui/material";
 import { Done, Cancel } from "@mui/icons-material";
 import axios from "axios";
 
 const WorkTypeRequest = () => {
   const [requests, setRequests] = useState([]); // Start with an empty array to hold the requests
+  const [loading, setLoading] = useState(true); // To handle loading state
   const employeeId = localStorage.getItem("employeeId");
 
   // Fetch work type requests from API on component mount
   useEffect(() => {
     const fetchRequests = async () => {
       try {
+        setLoading(true); // Start loading
         const response = await axios.get(`${process.env.REACT_APP_HR_IP}hr/workTypeRequest/?employee_id=${employeeId}`);
-        console.log(response.data, "response"); // Log the response to inspect the data structure
-        // Assuming the response has a data field containing an array of requests
-        setRequests(response.data); // Update the state with the API response data
+        setRequests(Array.isArray(response.data.data) ? response.data.data : []); // Update the state with the API response data
       } catch (error) {
         console.error("Error fetching work type requests:", error);
+      } finally {
+        setLoading(false); // End loading after fetching data
       }
     };
 
@@ -35,6 +37,22 @@ const WorkTypeRequest = () => {
     );
     setRequests(updatedRequests);
   };
+
+  // Show a loading spinner while fetching data
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <Container maxWidth="lg" sx={{ marginTop: 4 }}>
