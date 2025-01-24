@@ -10,7 +10,7 @@ const EmployeeList = () => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_IP}hr/obtainEmployeesList/`);
+        const response = await axios.get(`${process.env.REACT_APP_HR_IP}hr/obtainEmployeesList/`);
         console.log(response, "response");
         if (response && response.data) {
           setEmployees(response.data.data.users); // Assuming the response contains an array of employees

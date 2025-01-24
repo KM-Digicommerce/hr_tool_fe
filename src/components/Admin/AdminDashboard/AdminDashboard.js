@@ -6,15 +6,17 @@ import axios from "axios";
 const AdminDashboard = () => {
   const [dashboardData, setDashboardData] = useState({});
   const [loading, setLoading] = useState(true); // New state to track loading status
+  console.log(process.env.REACT_APP_IP,'${process.env.REACT_APP_HR_IP}');
+  
   useEffect(() => {
     // Define the async function inside useEffect
     const fetchDashboardData = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_IP}hr/obtainDashboardForHR/`);
+        const response = await axios.get(`${process.env.REACT_APP_HR_IP}hr/obtainDashboardForHR/`);
         if (response) {
           setDashboardData({
-            newJoiningsToday: response.data.data.today_users_count,
-            newJoiningsThisWeek: response.data.data.last_one_week_users_count,
+            newJoiningsToday: response.data.data.today_users_count || 0,
+            newJoiningsThisWeek: response.data.data.last_one_week_users_count || 0,
             totalStrength: response.data.data.total_users_users_count,
           });
         }

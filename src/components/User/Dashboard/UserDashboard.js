@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Button, IconButton, Grid, Card, CardContent, Avatar, TextField, Table, TableBody, TableCell, TableHead, TableRow,
-} from "@mui/material";
+import { Box, Typography, Button, IconButton, Grid, Card, CardContent, Avatar, TextField, Table, TableBody, TableCell, TableHead, TableRow, CircularProgress } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import axios from "axios";
@@ -8,7 +7,7 @@ import axios from "axios";
 const Dashboard = () => {
   const [isCheckedIn, setIsCheckedIn] = useState(false);
   const [isBreakIn, setIsBreakedIn] = useState(false);
-
+  const [loading, setLoading] = useState(true); // New state to track loading status
   const [runningTime, setRunningTime] = useState(0); // Timer state in seconds
   const [timerInterval, setTimerInterval] = useState(null); 
   const today = new Date();
@@ -31,12 +30,16 @@ const Dashboard = () => {
           `${process.env.REACT_APP_IP}employee/getEmployeeId/`,
           { params: { user_id: UserId } }
         );
-
         if (response.status === 200) {
           const totalSeconds = response.data.data.total_seconds;
           if (totalSeconds > 0) {
+            setLoading(false); // Set loading to false when data is fetched
             setRunningTime(totalSeconds); // Set the running time from the API response
             setIsCheckedIn(true); // Set checked-in status to true
+          }
+          const BreakStatus = response.data.data.on_break;
+          if (BreakStatus === true) {
+            setIsBreakedIn(true); // Set checked-in status to true
           }
         } else {
           console.error("Failed to fetch total seconds:", response);
@@ -116,7 +119,9 @@ const Dashboard = () => {
                 startTimer(); // Start the timer
                 // Get the total_seconds from the response
                 const totalSeconds = response.data.data.total_seconds;
-                setRunningTime(totalSeconds); // Set initial running time from API
+                if (totalSeconds > 0) {
+                  setRunningTime(totalSeconds); // Set initial running time from API
+                }
               } else if (response.data.data.message) {
                 alert(response.data.data.message);
               }
@@ -174,6 +179,13 @@ const Dashboard = () => {
       .toString()
       .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   };  
+  if (loading) {
+    return (
+      <Box  sx={{  display: "flex",  justifyContent: "center",  alignItems: "center",  height: "100vh",  }}  >
+        <CircularProgress />
+      </Box>
+    );
+  }
   return (
     <Box sx={{ backgroundColor: "#f9f9f9", minHeight: "100vh", p: 3 }}>
       {/* Header Section */}

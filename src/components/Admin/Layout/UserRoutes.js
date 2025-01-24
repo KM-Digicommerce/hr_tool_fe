@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import AdminDashboard from '../AdminDashboard/AdminDashboard';
 import EmployeeView from '../Employee/EmployeeView';
 import EmployeeList from '../Employee/EmployeeList';
-import EmployeeWorkTypeRequest from '../Employee/EmployeeWorkTypeRequest';
+import HrWorkTypeRequest from '../Employee/HrWorkTypeRequest';
 import { Box } from '@mui/material';
 
 function UserRoutes() {
@@ -13,7 +13,7 @@ function UserRoutes() {
           <Route path="/dashboard" element={<AdminDashboard />} />
           <Route path="/employee-view/:employeeId" element={<EmployeeView />} />
           <Route path="/employee-list" element={<EmployeeList />} />
-          <Route path="/work-type-request" element={<EmployeeWorkTypeRequest />} />
+          <Route path="/work-type-request" element={<HrWorkTypeRequest />} />
         </Routes>
     </Box>
   )
