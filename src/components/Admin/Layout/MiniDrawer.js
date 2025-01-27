@@ -9,9 +9,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Dashboard, FileCopy,Work,Person } from "@mui/icons-material";
+import { Dashboard, FileCopy,Work,Person,AttachMoney } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import Logout from "../../Auth/Logout";
 import UserRoutes from "./UserRoutes";
 import CustomAppBar from "./AppBar";  
 import IconButton from "@mui/material/IconButton";
@@ -142,17 +141,28 @@ export default function MiniDrawer() {
     </List>
   )}
 </ListItem>
+<ListItem disablePadding sx={{ display: "block" }}>
+  <ListItemButton onClick={toggleEmployee} sx={[{ minHeight: 48, px: 2 }, drawerOpen ? { justifyContent: "initial" } : { justifyContent: "center" }]}>
+    <ListItemIcon sx={[{ minWidth: 0, justifyContent: "center" }, drawerOpen ? { mr: 2 } : { mr: "auto" }]}>
+      <AttachMoney /> {/* Icon for Payroll */}
+    </ListItemIcon>
+    <ListItemText primary="Payroll" sx={[drawerOpen ? { opacity: 1 } : { opacity: 0 }]} />
+  </ListItemButton>
+  {employeeOpen && (
+    <List sx={{ pl: 3, paddingTop: 0, paddingBottom: 0 }}>
+      {/* Profile Sub-item */}
+      <ListItemButton component={Link} to="/hr/payslip" sx={{ paddingLeft: 2, paddingTop: 0.5, paddingBottom: 0.5, "&:hover": { backgroundColor: "#2066b0", color: "white" }, "&.Mui-selected": { backgroundColor: "#0074d9", color: "white" } }}>
+        <ListItemIcon sx={{ minWidth: 30 }}>
+          <AttachMoney /> {/* Icon for Payroll */}
+        </ListItemIcon>
+        <ListItemText primary="payslip" sx={{ marginLeft: 1 }} />
+      </ListItemButton>    
+    </List>
+  )}
+</ListItem>
         </List>
         <Divider />
-        <Box sx={{ mt: "auto", mb: 2, px: 2 }}>
-          <ListItem sx={{ mt: "15px" }} disablePadding>
-            <ListItemButton component={Logout}>
-              <ListItemText primary="Logout" />
-            </ListItemButton>
-          </ListItem>
-        </Box>
       </Drawer>
-
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         <UserRoutes />

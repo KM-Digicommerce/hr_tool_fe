@@ -11,7 +11,6 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { Dashboard, Work, History, CalendarToday, Person, RequestQuote, AttachMoney, Description, AccountBalance, RemoveCircle, AccountCircle, FileCopy } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import Logout from "../../Auth/Logout";
 import UserRoutes from "./UserRoutes";
 import CustomAppBar from "./AppBar";  
 import IconButton from "@mui/material/IconButton";
@@ -256,13 +255,6 @@ export default function MiniDrawer() {
 </ListItem>
         </List>
         <Divider />
-        <Box sx={{ mt: "auto", mb: 2, px: 2 }}>
-          <ListItem sx={{ mt: "15px" }} disablePadding>
-            <ListItemButton component={Logout}>
-              <ListItemText primary="Logout" />
-            </ListItemButton>
-          </ListItem>
-        </Box>
       </Drawer>
 
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
