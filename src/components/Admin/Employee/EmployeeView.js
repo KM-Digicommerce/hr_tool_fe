@@ -20,7 +20,32 @@ const EmployeeView = () => {
   const [payslips, setPayslips] = useState([]);
   const [loadingPayslips, setLoadingPayslips] = useState(false);
   const [errorPayslips, setErrorPayslips] = useState(null);
-
+  const [leaveRequests, setLeaveRequests] = useState([
+    {
+      id: 1,
+      leaveType: 'Sick Leave',
+      startDate: '2025-01-01',
+      endDate: '2025-01-03',
+      requestedDays: 3,
+      status: 'Pending',
+    },
+    {
+      id: 2,
+      leaveType: 'Casual Leave',
+      startDate: '2025-02-10',
+      endDate: '2025-02-12',
+      requestedDays: 2,
+      status: 'Pending',
+    },
+    {
+      id: 3,
+      leaveType: 'Annual Leave',
+      startDate: '2025-03-15',
+      endDate: '2025-03-20',
+      requestedDays: 5,
+      status: 'Approved',
+    }
+  ]);
   useEffect(() => {
     const fetchEmployeeDetails = async () => {
       try {
@@ -103,7 +128,14 @@ const EmployeeView = () => {
       setLoadingPayslips(false);
     }
   };
-
+  const handleLeaveStatusUpdate = (id, newStatus) => {
+    // Update the status of the leave request in state
+    setLeaveRequests(prevRequests =>
+      prevRequests.map(request =>
+        request.id === id ? { ...request, status: newStatus } : request
+      )
+    );
+  };
   if (loading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -298,30 +330,45 @@ const EmployeeView = () => {
                   <TableCell>End Date</TableCell>
                   <TableCell>Requested Days</TableCell>
                   <TableCell>Status</TableCell>
+                  <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                <TableRow>
-                  <TableCell>Sick Leave</TableCell>
-                  <TableCell>2025-01-01</TableCell>
-                  <TableCell>2025-01-03</TableCell>
-                  <TableCell>3 days</TableCell>
-                  <TableCell>Approved</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Casual Leave</TableCell>
-                  <TableCell>2025-02-10</TableCell>
-                  <TableCell>2025-02-12</TableCell>
-                  <TableCell>2 days</TableCell>
-                  <TableCell>Pending</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Annual Leave</TableCell>
-                  <TableCell>2025-03-15</TableCell>
-                  <TableCell>2025-03-20</TableCell>
-                  <TableCell>5 days</TableCell>
-                  <TableCell>Approved</TableCell>
-                </TableRow>
+                {leaveRequests.map((request) => (
+                  <TableRow key={request.id}>
+                    <TableCell>{request.leaveType}</TableCell>
+                    <TableCell>{request.startDate}</TableCell>
+                    <TableCell>{request.endDate}</TableCell>
+                    <TableCell>{request.requestedDays} days</TableCell>
+                    <TableCell>{request.status}</TableCell>
+                    <TableCell>
+                      {request.status === 'Pending' && (
+                        <>
+                          <Button
+                            onClick={() => handleLeaveStatusUpdate(request.id, 'Approved')}
+                            startIcon={<CheckIcon />}
+                            sx={{ color: 'green', marginRight: 1 }}
+                          >
+                            Approve
+                          </Button>
+                          <Button
+                            onClick={() => handleLeaveStatusUpdate(request.id, 'Rejected')}
+                            startIcon={<CloseIcon />}
+                            sx={{ color: 'red' }}
+                          >
+                            Reject
+                          </Button>
+                        </>
+                      )}
+                      {request.status === 'Approved' && (
+                        <Typography sx={{ color: 'green' }}>Approved</Typography>
+                      )}
+                      {request.status === 'Rejected' && (
+                        <Typography sx={{ color: 'red' }}>Rejected</Typography>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </>
