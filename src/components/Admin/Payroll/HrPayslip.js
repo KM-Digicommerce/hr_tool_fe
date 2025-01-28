@@ -75,6 +75,10 @@ const HrPayslip = () => {
 
   const handleSubmit = async () => {
     // Prepare the payslip data
+    if (!selectedEmployee || !from_date || !to_date || allowances.some(a => !a.name || a.amount <= 0) || deductions.some(d => !d.name || d.amount <= 0)) {
+        alert('Please fill all fields to generate a payslip');
+        return; // Prevent form submission
+      }
     const payslipData = {
       employee_id: selectedEmployee,
       allowances,
@@ -120,12 +124,13 @@ const HrPayslip = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ position: 'relative' }}>
+    <Container maxWidth="sm" sx={{ position: 'relative', marginRight:0 }}
+    className='payslip-container'>
       {/* Generate Payslip Button (Top-right corner) */}
       <Button
         variant="contained"
         color="primary"
-        sx={{ position: 'absolute', top: 8, right: 8 }}
+        sx={{ position: 'absolute', top: 1, right: 1 }}
         onClick={handleOpenDialog}
       >
         Generate Payslip
