@@ -32,7 +32,7 @@ const Dashboard = () => {
         );
         if (response.status === 200) {
           const totalSeconds = response.data.data.total_seconds;
-          if (totalSeconds > 0) {
+          if (totalSeconds >= 0) {
             setLoading(false); // Set loading to false when data is fetched
             setRunningTime(totalSeconds); // Set the running time from the API response
             setIsCheckedIn(true); // Set checked-in status to true
