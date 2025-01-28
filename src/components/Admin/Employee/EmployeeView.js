@@ -349,14 +349,14 @@ const EmployeeView = () => {
                             startIcon={<CheckIcon />}
                             sx={{ color: 'green', marginRight: 1 }}
                           >
-                            Approve
+                            {/* Approve */}
                           </Button>
                           <Button
                             onClick={() => handleLeaveStatusUpdate(request.id, 'Rejected')}
                             startIcon={<CloseIcon />}
                             sx={{ color: 'red' }}
                           >
-                            Reject
+                            {/* Reject */}
                           </Button>
                         </>
                       )}
